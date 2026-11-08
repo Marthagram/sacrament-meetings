@@ -13,11 +13,13 @@ export default function HomePage() {
       </section>
       
       <Image
-        src="/path/to/image.png"
-        alt="Description of the image"
-        width={500}
-        height={300}
-        className="hidden md:inline-block"
+        src="/images/sacrament-meeting-pictures.webp"
+        alt="picture of a sacrament meeting"
+        width={698}
+        height={400}
+        loading="eager"
+      
+        className="hidden md:inline-block "
       />
 
 

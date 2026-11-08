@@ -121,7 +121,7 @@ const meetings: SacramentMeeting[] = [
   },
   {
   id: 7,
-  date: '2026-11-01',
+  date: '2026-11-08',
   meetingType: 'regular',
   presiding: 'Bishop David Okafor',
   conducting: 'Brother James Adeyemi',
