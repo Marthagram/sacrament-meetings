@@ -1,9 +1,7 @@
 import { Suspense } from 'react';
+import { headers } from 'next/headers';
 import MeetingDetail from '@/components/MeetingDetails';
 import type { SacramentMeeting } from '@/lib/types';
-
-// the code here is for the page that shows the details of a specific sacrament meeting based on its ID.
-//  It fetches the meeting data from an API and displays it using the MeetingDetail component.
 
 export default function MeetingsPage({
   params,
@@ -29,20 +27,38 @@ async function MeetingDetailsContent({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
+  let meeting: SacramentMeeting | null = null;
+  let hasError = false;
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  try {
+    const { id } = await params;
 
-  const res = await fetch(`${baseUrl}/api/meetings/${id}`, {
-    cache: 'no-store',
-  });
+    const headersList = await headers();
+    const host = headersList.get('host');
+    const protocol = host?.includes('localhost') ? 'http' : 'https';
+    const baseUrl = `${protocol}://${host}`;
 
-  if (!res.ok) {
-    return <p>Meeting not found.</p>;
+    const res = await fetch(`${baseUrl}/api/meetings/${id}`, {
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      hasError = true;
+    } else {
+      meeting = await res.json();
+    }
+  } catch (error) {
+    console.error('Failed to load meeting:', error);
+    hasError = true;
   }
 
-  const meeting: SacramentMeeting = await res.json();
+  if (hasError) {
+    return <p>Could not load meeting. Please try again.</p>;
+  }
+
+  if (!meeting) {
+    return <p>Meeting not found.</p>;
+  }
 
   return (
     <div className="quick-links">
