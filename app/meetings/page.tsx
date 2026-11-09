@@ -18,7 +18,8 @@ export default function MeetingsPage() {
 }
 
 async function MeetingsList() {
-  const res = await fetch('http://localhost:3000/api/meetings', {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const res = await fetch(`${baseUrl}/api/meetings`, {
     cache: 'no-store',
   });
   const meetings: SacramentMeeting[] = await res.json();
