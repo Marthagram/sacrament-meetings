@@ -1,11 +1,10 @@
-
 import type { SacramentMeeting } from "@/lib/types";
 
 interface MeetingDetailProps {
   meeting: SacramentMeeting;
 }
 
-export default function MeetingDetail({ meeting }: MeetingDetailProps) {
+export default function MeetingDetails({ meeting }: MeetingDetailProps) {
   return (
     <main className="max-w-3xl mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold">
@@ -30,15 +29,15 @@ export default function MeetingDetail({ meeting }: MeetingDetailProps) {
       <section>
         <h2>Opening</h2>
         <p>
-          Opening Hymn: {meeting.openingHymn.number} -{" "}
-          {meeting.openingHymn.title}
+          Opening Hymn: {meeting.openingHymn?.number} -{" "}
+          {meeting.openingHymn?.title}
         </p>
         <p>Opening Prayer: {meeting.openingPrayer}</p>
       </section>
 
       <section>
         <h2>Ward Business</h2>
-        {meeting.wardBusiness.map((item, index) => (
+        {(meeting.wardBusiness ?? []).map((item, index) => (
           <p key={index}>{item.description}</p>
         ))}
 
@@ -50,14 +49,14 @@ export default function MeetingDetail({ meeting }: MeetingDetailProps) {
       <section>
         <h2>Sacrament</h2>
         <p>
-          Sacrament Hymn: {meeting.sacramentHymn.number} -{" "}
-          {meeting.sacramentHymn.title}
+          Sacrament Hymn: {meeting.sacramentHymn?.number} -{" "}
+          {meeting.sacramentHymn?.title}
         </p>
       </section>
 
       <section>
         <h2>Speakers and Musical Numbers</h2>
-        {meeting.speakers.map((item, index) => (
+        {(meeting.speakers ?? []).map((item, index) => (
           <p key={index}>
             {item.type === "speaker" ? "Speaker" : "Musical Number"}:{" "}
             {item.name}
@@ -69,13 +68,12 @@ export default function MeetingDetail({ meeting }: MeetingDetailProps) {
       <section>
         <h2>Closing</h2>
         <p>
-          Closing Hymn: {meeting.closingHymn.number} -{" "}
-          {meeting.closingHymn.title}
+          Closing Hymn: {meeting.closingHymn?.number} -{" "}
+          {meeting.closingHymn?.title}
         </p>
         <p>Closing Prayer: {meeting.closingPrayer}</p>
       </section>
 
-      
     </main>
   );
 }

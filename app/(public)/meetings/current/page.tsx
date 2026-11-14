@@ -1,7 +1,6 @@
-import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { connection } from 'next/server';
-import { getAllMeetings } from '@/lib/meetings-db';
+import { getMeetingByDate } from '@/lib/meetings-db';
 
 function getMostRecentSundayISO(): string {
   const today = new Date();
@@ -15,27 +14,15 @@ function getMostRecentSundayISO(): string {
   return `${year}-${month}-${day}`;
 }
 
-async function RedirectToCurrent() {
-  await connection();
+export default async function CurrentMeetingPage() {
+  await connection(); // <-- this is the fix, tells Next 16 this is dynamic
 
   const sundayDate = getMostRecentSundayISO();
-  const meetings = getAllMeetings();
-
-  const currentMeeting = meetings.find((m) => m.date === sundayDate);
+  const currentMeeting = await getMeetingByDate(sundayDate);
 
   if (!currentMeeting) {
     redirect('/meetings');
   }
 
   redirect(`/meetings/${currentMeeting.id}`);
-
-  return null;
-}
-
-export default function CurrentMeetingPage() {
-  return (
-    <Suspense fallback={null}>
-      <RedirectToCurrent />
-    </Suspense>
-  );
 }

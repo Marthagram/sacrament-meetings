@@ -2,7 +2,7 @@ import NavLinks from "./NavLinks";
 import { Suspense } from "react";
 
 export default function Header() {
-  const today = new Date(2026,10, 8); // Note: Months are 0-indexed in JavaScript
+  const today = new Date(2026, 10, 14); // Note: Months are 0-indexed in JavaScript
   const formattedDate = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     year: 'numeric',
