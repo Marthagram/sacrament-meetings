@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import type { SacramentMeeting } from "@/lib/types";
 
@@ -7,17 +8,22 @@ interface MeetingCardProps {
 
 export default function MeetingCard({ meeting }: MeetingCardProps) {
   return (
-    <Link
-      href={`/meetings/${meeting.id}`}
-      // Your custom class + Tailwind classes together
-      className="card-link hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
-    >
-      <h2>Sacrament Meeting</h2>
-      <span>Date: {meeting.date}</span>
-      <span>Presiding: {meeting.presiding}</span>
-      <span>Conducting: {meeting.conducting}</span>
-      <span>Opening Hymn: {meeting.openingHymn.title}</span>
-      <span className="card-link-action">View Details →</span>
-    </Link>
+    <div className="card-link hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+      <Link href={`/meetings/${meeting.id}`} className="block">
+        <h2>Sacrament Meeting</h2>
+        <span>Date: {meeting.date}</span>
+        <span>Presiding: {meeting.presiding}</span>
+        <span>Conducting: {meeting.conducting}</span>
+        <span>Opening Hymn: {meeting.openingHymn.title}</span>
+        <span className="card-link-action">View Details →</span>
+      </Link>
+
+      <Link
+        href={`/meetings/${meeting.id}/edit`}
+        className="inline-block mt-3 text-blue-600 hover:underline"
+      >
+        Edit Meeting
+      </Link>
+    </div>
   );
 }

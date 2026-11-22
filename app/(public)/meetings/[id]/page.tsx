@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
 import MeetingDetails from '@/components/MeetingDetails';
 import { getMeetingById } from '@/lib/meetings-db';
 import type { SacramentMeeting } from '@/lib/types';
 import MeetingDetailsSkeleton from '@/components/MeetingDetailsSkeleton';
-
 export default function MeetingsPage({
   params,
 }: {
@@ -34,12 +34,13 @@ async function MeetingDetailsContent({
   const meeting: SacramentMeeting | null = await getMeetingById(Number(id));
 
   if (!meeting) {
-    return <p>Meeting not found.</p>;
+    notFound()
   }
 
   return (
     <div className="quick-links">
       <MeetingDetails meeting={meeting} />
+      
     </div>
   );
 }
