@@ -244,3 +244,10 @@ export async function updateMeeting(
   revalidatePath('/meetings');
   redirect('/meetings');
 }
+
+
+export async function deleteMeeting(id: number) {
+  await sql`DELETE FROM meetings WHERE id = ${id}`;
+  revalidatePath('/meetings');
+  redirect('/meetings');
+}
